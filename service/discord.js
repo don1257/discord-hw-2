@@ -1,6 +1,6 @@
 const postDiscordMsg = async (content) => {
-    let url = 'https://www.hackercoop.dev/api/boop'
-    fetch(url, {
+    let url = 'https://www.hackercoop.dev/api/boop';
+    return fetch(url, {
         method: 'POST',
         headers: {
             'Authorization': 'HackerSummer2023',
@@ -8,15 +8,17 @@ const postDiscordMsg = async (content) => {
         },
         body: JSON.stringify({ content: `Message from don1257: ${content}` })
     })
-        .then(response => response.json())
-        .then(data => {
-            // Handle the response data here
-            console.log(data);
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Failed to post message');
+            }
+            return response;
         })
-        .catch(error => {
-            // Handle any errors that occurred during the request
-            console.error(error);
+        .catch((error) => {
+            console.error("Error during fetch: ", error);
+            return error;
         });
 }
+
 
 export default postDiscordMsg;
